@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Assignment 1</title>
+  <script src="assignment1-script.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<style>
+	h1 {
+		margin: 0 auto;
+		padding:0 0.75rem;
+	}
+	.formContainer {
+		margin: 0 auto;
+		padding:0 0.75rem;
+	}
+	.container {
+		margin: 0;
+	}
+	
+	#containerComponent {
+		margin: 0;
+	}
+	.marker, .active {
+		margin: 0 auto;
+		padding:0 0.75rem;
+		border-left: 2px solid #ea4a4f;
+	}
+	.divider {
+    width:50px;
+    height:auto;
+    display:inline-block;
+    }
+    
+</style>
+  <body>
+    <!--Step 1 -->
+    
+     <br />
+      <h1>Grade Calculator</h1>
+      <br />
+      <br />
+
+      <div class="container col s12 m5"><h4 class="card-panel orange lighten-2">Step 1: Form Setup</h4></div>
+
+   <div class="row">
+       <div class="input-field col s12">
+         <div class="row">
+         <form class="col s12">
+              <br /><br />
+            <div class="col m5 offset-m1">
+            <label class="col m5 offset-m1" for="gradeComponents">Completed grade component count</label>
+            <input placeholder="Enter the number of grade components you have grades for" id="gradeComponents" type="text" class="validate">
+          </input>
+          </div>
+     </form>
+     </div>
+   </div>
+  <!-- The setup button -->
+  <div class="row">
+    <div class="col s4 offset-s3"><a id="setupBtn" class="waves-effect waves-light btn" onclick="displayFunction()">Setup Form</a>
+    </div>
+  </div>
+   </div>
+    
+		<!-- Step 2 -->
+<section id="section2" style="display:none">
+<form onsubmit="return false">
+  <div class="container">
+   <br>
+  <h4 class="col s6 card-panel orange lighten-2">Step 2: Grade Entry</h4>
+  <!--Where to put the grade entry inputs -->
+ <div class="container" id="componentContainer">
+  <div class="row" id="step2-container">
+  
+  </div>
+  </div>
+   <div>
+     <p class="center-align">Select upside / downside options to predict best and worst case scenario.</p>
+   </div>
+
+</div>
+  <!-- Where to put radio buttons and predict grade / reset buttons -->
+
+    
+    <div class="container">
+  <div class="row">
+    <div class="col s4 offset-s2">
+	  <p>
+	    <input name="minus-group" class="with-gap" type="radio" name="minus" id="minus-10" value="1" checked/>
+	    <label for="minus-10">-10%</label>
+      </p>
+	  <p>
+		<input name="minus-group" class="with-gap" type="radio" name="minus" id="minus-20" value="2"/>
+		<label for="minus-20">-20%</label>
+	  </p>
+	  <p>
+	    <input name="minus-group" class="with-gap" type="radio" name="minus" id="minus-30" value="3"/>
+		<label for="minus-30">-30%</label>
+	</p>
+	</div>
+	<div class="col s4">
+	  <p>
+	    <input name="plus-group" class="with-gap" type="radio" name="plus" id="plus-10" checked />
+	    <label for="plus-10">+10%</label>
+      </p>
+	  <p>
+		<input name="plus-group" class="with-gap" type="radio" name="plus" id="plus-20" />
+		<label for="plus-20">+20%</label>
+	  </p>
+	  <p>
+	    <input name="plus-group" class="with-gap" type="radio" name = "plus" id="plus-30" />
+		<label for="plus-30">+30%</label>
+	</p>
+	</div><!--Radio 2 ends -->
+  </div>
+  <br />
+  <br />
+  <div class="row">
+      <div class="col s4 offset-s3"><a id="predict-grade-button" class="waves-effect waves-light btn" onclick="caculate()">Predict Grade</a></div>
+      <div class="col s4"><button id="reset-button" type="reset" class="waves-effect waves-light red btn" onclick="">Reset</button></div>
+  </div>
+</div>
+    
+    
+ 
+   <br />
+   <br />
+   </form>
+   </section>
+   
+   		<!-- Step 3 -->
+   <section id="section3" style="display:none">
+   <form onsubmit="return false">
+
+   <br />
+   	
+   <br />
+  <div class="container">
+   <h4 class="col s6 card-panel orange lighten-2">Step 3: Results</h4>
+  </div>
+  <br /><br />
+  <br /><br />
+  <br /><br />
+  <div class="row">
+  	<div class="col s12">
+  	  <ul>
+  	  	<li class="col s3"><i class="material-icons red-text">trending_down</i></li>
+  		<li class="col s3"><i class="material-icons">trending_flat</i></li>
+  		<li class="col s3"><i class="material-icons green-text">trending_up</i></li>
+  	  </ul>
+  	</div>
+  </div>
+  
+  <div class="row">
+  	<div class="col s12">
+  		<ul>
+  			<li class="active col s3" id="below"></li>
+  			<li class="active col s3" id="flat"></li>
+  			<li class="active col s3" id="above"></li>
+  		</ul>
+  	</div>
+  </div>
+  <br />
+  <br />
+  <div class="col s12">
+	  <div class="row">
+	    <div class="col s1 offset-s3"><button id="startBtn" class="waves-effect waves-light btn red" onclick="startover()">START OVER</button> </div>
+	    <div class="col s1"><button id="printBtn" class="waves-effect waves-light btn" onclick="window.print()">PRINT</button></div>
+	  </div>
+  </div>
+  </form>
+</section>
+
+ </body>
+</html>
